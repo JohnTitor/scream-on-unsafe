@@ -1,6 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { exec } from 'child_process';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -10,16 +11,36 @@ export function activate(context: vscode.ExtensionContext) {
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "scream-on-unsafe" is now active!');
 
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('scream-on-unsafe.helloWorld', () => {
-        // The code you place here will be executed every time your command is executed
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World from scream-on-unsafe!');
+    let activeTextEditor = vscode.window.activeTextEditor;
+    let text: string = "";
+
+    vscode.window.onDidChangeVisibleTextEditors(() => {
+        activeTextEditor = vscode.window.activeTextEditor;
     });
 
-    context.subscriptions.push(disposable);
+    vscode.workspace.onDidChangeTextDocument(e => {
+        for (let val of e.contentChanges) {
+            text += val.text;
+        }
+
+        // console.log(text);
+        if (text.includes("unsafe")) {
+            vscode.window.showInformationMessage('screeeeeeeam!!!');
+            exec(
+                "powershell -c (New-Object Media.SoundPlayer 'scream.wav').PlaySync()",
+                (err, stdout) => {
+                    console.log("result:", err, stdout);
+                }
+            );
+
+            text = "";
+        }
+
+        // Clear the text buffer at some point.
+        if (text.length >= 256) {
+            text = "";
+        }
+    });
 }
 
 // this method is called when your extension is deactivated
