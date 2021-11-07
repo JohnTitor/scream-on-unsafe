@@ -1,19 +1,35 @@
 {
     "name": "scream-on-unsafe",
     "displayName": "scream-on-unsafe",
-    "description": "",
-    "version": "0.0.1",
+    "description": "Screams when you write `unsafe` on Rust",
+    "version": "0.1.0",
+    "publisher": "JohnTitor",
+    "repository": {
+        "url": "https://github.com/JohnTitor/scream-on-unsafe",
+        "type": "git"
+    },
     "engines": {
         "vscode": "^1.62.0"
     },
     "categories": [
-        "Other"
+        "Programming Languages"
     ],
     "activationEvents": [
         "onLanguage:rust"
     ],
     "main": "./out/extension.js",
-    "contributes": {},
+    "contributes": {
+        "configuration": {
+            "title": "screamOnUnsafe",
+            "properties": {
+                "screamOnUnsafe.audioExec": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Specifies a command to play your audio file, has to be specified"
+                }
+            }
+        }
+    },
     "scripts": {
         "vscode:prepublish": "yarn run compile",
         "compile": "tsc -p ./",

@@ -26,12 +26,10 @@ export function activate(context: vscode.ExtensionContext) {
         // console.log(text);
         if (text.includes("unsafe")) {
             vscode.window.showInformationMessage('screeeeeeeam!!!');
-            exec(
-                "powershell -c (New-Object Media.SoundPlayer 'scream.wav').PlaySync()",
-                (err, stdout) => {
-                    console.log("result:", err, stdout);
-                }
-            );
+            const audioExec: string = vscode.workspace.getConfiguration('screamOnUnsafe').audioExec;
+            exec(audioExec, (err, stdout) => {
+                console.log("result: ", err, stdout);
+            });
 
             text = "";
         }
