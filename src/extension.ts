@@ -25,11 +25,15 @@ export function activate(context: vscode.ExtensionContext) {
 
         // console.log(text);
         if (text.includes("unsafe")) {
-            vscode.window.showInformationMessage('screeeeeeeam!!!');
             const audioExec: string = vscode.workspace.getConfiguration('screamOnUnsafe').audioExec;
-            exec(audioExec, (err, stdout) => {
-                console.log("result: ", err, stdout);
-            });
+            if (audioExec === "") {
+                vscode.window.showErrorMessage('`audioExec` has to be specified');
+            } else {
+                vscode.window.showInformationMessage("screeeeeeeam!!!");
+                exec(audioExec, (err, stdout) => {
+                    console.log("result: ", err, stdout);
+                });
+            }
 
             text = "";
         }
