@@ -3,7 +3,8 @@
     "displayName": "scream-on-unsafe",
     "description": "Screams when you write `unsafe` on Rust",
     "version": "0.1.0",
-    "publisher": "JohnTitor",
+    "publisher": "fraternite",
+    "license": "MIT",
     "repository": {
         "url": "https://github.com/JohnTitor/scream-on-unsafe",
         "type": "git"
